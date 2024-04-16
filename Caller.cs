@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace CallCenterApplication
 {
-    public class Call
+    public class Caller : Person
     {
         private string _callType;
-        private int _callComplexity;
-        private string _callLanguage;
+        private int _callComplexity;        
 
-        public Call(string callType, int callComplexity, string callLanguage)
+        public Caller(string name, Dictionary<string, int> languages, string callType, int callComplexity) : base(name, languages)
         {
             _callType = callType;
             _callComplexity = callComplexity;
-            _callLanguage = callLanguage;
+            _languages = languages;
         }
 
         public void MakeCall(CallCenter callCenter)
@@ -29,9 +28,9 @@ namespace CallCenterApplication
             get { return _callType; }
         }
 
-        public string CallLanguage
+        public Dictionary<string, int> CallLanguages
         {
-            get { return _callLanguage; }
+            get { return _languages; }
         }
 
         public int CallComplexity

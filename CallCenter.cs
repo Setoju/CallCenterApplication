@@ -1,5 +1,5 @@
-﻿using CallCenterApplication.Operators;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,14 +11,14 @@ namespace CallCenterApplication
     public class CallCenter
     {
         private List<Operator> _operators;
-        private Queue<Call> _callsQueue;
+        private Queue<Caller> _callsQueue;
         private Timer _timer;
 
         public CallCenter(List<Operator> operators)
         {
             //_operators = new List<Operator>();
             _operators = operators;
-            _callsQueue = new Queue<Call>();            
+            _callsQueue = new Queue<Caller>();            
             _timer = new Timer(CheckQueue, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
         }
 
@@ -27,7 +27,7 @@ namespace CallCenterApplication
             get { return _operators; }            
         }    
         
-        public Queue<Call> CallsQueue
+        public Queue<Caller> CallsQueue
         {
             get { return _callsQueue; }
         }
@@ -42,7 +42,7 @@ namespace CallCenterApplication
             _operators.Remove(_operator);
         }
 
-        public void ReceiveCall(Call call)
+        public void ReceiveCall(Caller call)
         {
             bool callSended = SendCall(call);
             if (!callSended)
@@ -50,15 +50,20 @@ namespace CallCenterApplication
                 _callsQueue.Enqueue(call);
             }
         }
+
+        public void GetCall(Caller call)
+        {
+            _callsQueue.Enqueue(call);
+        }
         
-        public bool SendCall(Call call)
+        public bool SendCall(Caller call)
         {
             foreach (Operator op in _operators)
             {
                 // Add finding more skilled operator
-                if (op.Languages.ContainsKey(call.CallLanguage) && op.Skills.ContainsKey(call.CallType))
+                if (call.Languages.Keys.Intersect(op.Languages.Keys).Any() && op.Skills.ContainsKey(call.CallType))
                 {
-                    op.RespondToCall(call);
+                    op.RespondToCall(call, this);
 
                     return true;
                 }
@@ -71,9 +76,9 @@ namespace CallCenterApplication
         {
             if (_callsQueue.Count > 0)
             {
-                List<Call> callsToRemove = new List<Call>();
+                List<Caller> callsToRemove = new List<Caller>();
 
-                foreach (Call call in _callsQueue)
+                foreach (Caller call in _callsQueue)
                 {
                     if (SendCall(call))
                     {
@@ -81,11 +86,16 @@ namespace CallCenterApplication
                     }
                 }
 
-                foreach (Call callToRemove in callsToRemove)
+                foreach (Caller callToRemove in callsToRemove)
                 {
-                    _callsQueue = new Queue<Call>(_callsQueue.Where(c => c != callToRemove));
+                    RemoveCallFromQueue(callToRemove);
                 }
             }
+        }
+
+        public void RemoveCallFromQueue(Caller call)
+        {
+            _callsQueue = new Queue<Caller>(_callsQueue.Where(c => c != call));
         }
     }
 }

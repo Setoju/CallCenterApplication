@@ -8,7 +8,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CallCenterApplication.Operators;
 
 namespace CallCenterApplication
 {
@@ -29,14 +28,14 @@ namespace CallCenterApplication
             Operator op1 = new Operator("Eugene", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, new Dictionary<string, int> { { "Communicating", 1 } }, 10);
             Operator op2 = new Operator("Sergei", new Dictionary<string, int> { { "Italian", 1 }, { "Spanish", 2 } }, new Dictionary<string, int> { { "Helping", 1 } }, 10);
 
-            Call call1 = new Call("Helping", 20, "Italian");
-            Call call2 = new Call("Helping", 20, "Spanish");
+            Caller call1 = new Caller("Sasa", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, "Communicating", 20);
+            Caller call2 = new Caller("Sasha", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, "Helping", 20);
 
             List<Operator> operators = new List<Operator>() { op1, op2 };
 
-            CallCenter callCenter = new CallCenter(operators);
-            callCenter.ReceiveCall(call1);
-            callCenter.ReceiveCall(call2);
+            CallCenter callCenter = new CallCenter(operators);            
+            callCenter.GetCall(call1);
+            callCenter.GetCall(call2);
         }
     }
 }

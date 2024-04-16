@@ -8,26 +8,18 @@ using System.Windows;
 
 namespace CallCenterApplication
 {
-    public class Operator
-    {
-        private string _name;
-        private Dictionary<string, int> _languages;
+    public class Operator : Person
+    {                
         private Dictionary<string, int> _skillSet;
         private int _performance;
         private Stopwatch _idleTimer;
 
         public Operator(string name, Dictionary<string, int> languages, Dictionary<string, int> skillSet, int performance)
+        : base(name, languages)
         {
-            _name = name;
-            _languages = languages;
             _skillSet = skillSet;
             _performance = performance;
             _idleTimer = new Stopwatch();
-        }
-
-        public Dictionary<string, int> Languages
-        {
-            get { return _languages; }
         }
 
         public Dictionary<string, int> Skills
@@ -40,8 +32,9 @@ namespace CallCenterApplication
             _idleTimer.Start();
         }
 
-        public void RespondToCall(Call call)
+        public void RespondToCall(Caller call, CallCenter callCenter)
         {
+            callCenter.RemoveCallFromQueue(call);
             _idleTimer.Reset();
 
             int unavailableTime = call.CallComplexity / _performance;
@@ -50,7 +43,7 @@ namespace CallCenterApplication
 
             Thread.Sleep(unavailableTime * 1000);
 
-            MessageBox.Show("Done!");
+            MessageBox.Show("Done!");            
 
             Idle();
         }

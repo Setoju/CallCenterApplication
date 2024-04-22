@@ -11,15 +11,20 @@ namespace CallCenterApplication
     public class CallCenter
     {
         private List<Operator> _operators;
-        private Queue<Caller> _callsQueue;
-        private Timer _timer;
+        //private Queue<Caller> _callsQueue
+        private List<Caller> _callsQueue;
+        // It's much harder to implement the PriorityQueue because we often change the Queue
+        // But we can't iterate through the PriorityQueue, so it makes methods too complicated
+        //private PriorityQueue<Caller, int> _callsQueue;
+        //private Timer _timer;
 
         public CallCenter(List<Operator> operators)
         {
             //_operators = new List<Operator>();
             _operators = operators;
-            _callsQueue = new Queue<Caller>();            
-            _timer = new Timer(CheckQueue, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+            //_callsQueue = new Queue<Caller>();
+            _callsQueue = new List<Caller>();
+            //_timer = new Timer(CheckQueue, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
         }
 
         public List<Operator> Operators
@@ -27,7 +32,7 @@ namespace CallCenterApplication
             get { return _operators; }            
         }    
         
-        public Queue<Caller> CallsQueue
+        public List<Caller> CallsQueue
         {
             get { return _callsQueue; }
         }
@@ -44,58 +49,71 @@ namespace CallCenterApplication
 
         public void ReceiveCall(Caller call)
         {
-            bool callSended = SendCall(call);
-            if (!callSended)
+            _callsQueue.Add(call);
+            if (CanSendCall(call))
             {
-                _callsQueue.Enqueue(call);
+                SendCall(call);
             }
+
         }
 
-        public void GetCall(Caller call)
+        public void RemoveReceivedCall(Caller call)
         {
-            _callsQueue.Enqueue(call);
+            _callsQueue.Remove(call);
         }
-        
-        public bool SendCall(Caller call)
+
+        private bool CanSendCall(Caller call)
         {
             foreach (Operator op in _operators)
             {
-                // Add finding more skilled operator
-                if (call.Languages.Keys.Intersect(op.Languages.Keys).Any() && op.Skills.ContainsKey(call.CallType))
+                if (!op.IsOnCall && call.Languages.Keys.Intersect(op.Languages.Keys).Any() && op.Skills.ContainsKey(call.CallType))
                 {
-                    op.RespondToCall(call, this);
-
                     return true;
                 }
             }
 
             return false;
         }
-
-        private void CheckQueue(object state)
+        
+        public async void SendCall(Caller call)
         {
-            if (_callsQueue.Count > 0)
-            {
-                List<Caller> callsToRemove = new List<Caller>();
+            Operator bestOperator = null;
+            int bestSkillLevel = int.MaxValue;
+            TimeSpan longestIdleTime = TimeSpan.Zero;
 
-                foreach (Caller call in _callsQueue)
+            foreach (Operator op in _operators)
+            {
+                if (!op.IsOnCall && call.Languages.Keys.Intersect(op.Languages.Keys).Any() && op.Skills.ContainsKey(call.CallType))
                 {
-                    if (SendCall(call))
+                    if (op.Skills[call.CallType] < bestSkillLevel || (op.Skills[call.CallType] == bestSkillLevel && op.IdleTime.Elapsed > longestIdleTime))
                     {
-                        callsToRemove.Add(call);
+                        bestOperator = op;
+                        bestSkillLevel = op.Skills[call.CallType];
+                        longestIdleTime = op.IdleTime.Elapsed;
                     }
                 }
+            }
 
-                foreach (Caller callToRemove in callsToRemove)
-                {
-                    RemoveCallFromQueue(callToRemove);
-                }
+            if (bestOperator != null)
+            {
+                await bestOperator.RespondToCall(call, this);
             }
         }
 
-        public void RemoveCallFromQueue(Caller call)
+        public void CheckQueue()
         {
-            _callsQueue = new Queue<Caller>(_callsQueue.Where(c => c != call));
+            if (_callsQueue.Count > 0)
+            {
+                List<Caller> callsCopy = new List<Caller>(_callsQueue);
+
+                foreach (Caller call in callsCopy)
+                {
+                    if (CanSendCall(call))
+                    {
+                        SendCall(call);
+                    }
+                }
+            }
         }
     }
 }

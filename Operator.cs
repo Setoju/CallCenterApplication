@@ -9,10 +9,11 @@ using System.Windows;
 namespace CallCenterApplication
 {
     public class Operator : Person
-    {                
+    {
         private Dictionary<string, int> _skillSet;
         private int _performance;
         private Stopwatch _idleTimer;
+        private bool _onCall = false;
 
         public Operator(string name, Dictionary<string, int> languages, Dictionary<string, int> skillSet, int performance)
         : base(name, languages)
@@ -32,19 +33,32 @@ namespace CallCenterApplication
             _idleTimer.Start();
         }
 
-        public void RespondToCall(Caller call, CallCenter callCenter)
+        public Stopwatch IdleTime
         {
-            callCenter.RemoveCallFromQueue(call);
+            get { return _idleTimer; }
+        }
+        public bool IsOnCall
+        {
+            get { return _onCall; }
+        }
+
+        public async Task RespondToCall(Caller call, CallCenter callCenter)
+        {
+            lock (callCenter.CallsQueue)
+            {
+                callCenter.RemoveReceivedCall(call);
+            }
+            _onCall = true;
             _idleTimer.Reset();
 
             int unavailableTime = call.CallComplexity / _performance;
-
             MessageBox.Show("Working...");
+            await Task.Delay(unavailableTime * 1000);
+            MessageBox.Show("Done!");  
+            
+            _onCall = false;
 
-            Thread.Sleep(unavailableTime * 1000);
-
-            MessageBox.Show("Done!");            
-
+            callCenter.CheckQueue();
             Idle();
         }
     }

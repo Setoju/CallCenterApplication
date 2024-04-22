@@ -22,8 +22,8 @@ namespace CallCenterApplication
             get { return _name; }
         }
 
-        public Dictionary<string, int> Languages{
+        public Dictionary<string, int> Languages {
             get { return _languages; }
-        }
+        }        
     }
 }

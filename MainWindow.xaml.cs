@@ -30,12 +30,16 @@ namespace CallCenterApplication
 
             Caller call1 = new Caller("Sasa", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, "Communicating", 20);
             Caller call2 = new Caller("Sasha", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, "Helping", 20);
+            Caller call3 = new Caller("Sashaasd", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, "Helping", 20);
+            Caller call4 = new Caller("Sashaasasdd", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, "Helping", 20);
 
             List<Operator> operators = new List<Operator>() { op1, op2 };
 
             CallCenter callCenter = new CallCenter(operators);            
-            callCenter.GetCall(call1);
-            callCenter.GetCall(call2);
+            callCenter.ReceiveCall(call1);
+            callCenter.ReceiveCall(call2);
+            callCenter.ReceiveCall(call3);
+            callCenter.ReceiveCall(call4);
         }
     }
 }

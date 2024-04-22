@@ -5,26 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CallCenterApplication
 {
     public class CallCenter
     {
         private List<Operator> _operators;
-        //private Queue<Caller> _callsQueue
         private List<Caller> _callsQueue;
         // It's much harder to implement the PriorityQueue because we often change the Queue
         // But we can't iterate through the PriorityQueue, so it makes methods too complicated
-        //private PriorityQueue<Caller, int> _callsQueue;
-        //private Timer _timer;
 
-        public CallCenter(List<Operator> operators)
+        public CallCenter()
         {
-            //_operators = new List<Operator>();
-            _operators = operators;
-            //_callsQueue = new Queue<Caller>();
+            _operators = new List<Operator>();
             _callsQueue = new List<Caller>();
-            //_timer = new Timer(CheckQueue, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
         }
 
         public List<Operator> Operators

@@ -8,5 +8,24 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
 
+        
+        <!-- Add Operator button -->
+        <Button Content="Add Operator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Click="AddOperatorButton_Click"/>
+
+        <!-- Fire Operator button -->
+        <Button Content="Fire Operator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0"/>
+
+        <!-- Call button -->
+        <Button Content="Call" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,10,0,0"/>
+
+        <!-- List of waiting calls -->
+        <ListBox Name="WaitingCallsListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0" Width="210" Height="40"/>
+
+        <!-- Operator details -->
+        <StackPanel Name="OperatorDetailsPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,10,0">
+            <Image Name="OperatorImage" Width="100" Height="100"/>
+            <TextBlock Name="OperatorNameTextBlock" Text="Operator Name" Margin="0,10,0,0"/>
+            <TextBlock Name="IdleTimeTextBlock" Text="Idle Time" Margin="0,5,0,0"/>
+        </StackPanel>
     </Grid>
 </Window>

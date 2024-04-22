@@ -1,0 +1,40 @@
+﻿<Window x:Class="CallCenterApplication.AddOperatorForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:CallCenterApplication"
+        Title="Add Operator" MinHeight="450" MinWidth="400" MaxHeight="450" MaxWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Name:" Grid.Row="0" Margin="10"/>
+        <TextBox x:Name="NameTextBox" Grid.Row="0" Margin="70,10,10,10"/>
+
+        <Label Content="Languages:" Grid.Row="1" Margin="4"/>
+        <StackPanel x:Name="LanguageCheckBoxes" Grid.Row="1" Margin="70,10,10,10">
+            <CheckBox Content="English"/>
+            <CheckBox Content="Spanish"/>
+            <CheckBox Content="Italian"/>
+            <CheckBox Content="Ukrainian"/>
+            <CheckBox Content="Chinese"/>
+        </StackPanel>
+
+        <Label Content="Performance:" Grid.Row="2" Margin="5,95, 300,60"/>
+        <Slider x:Name="PerformanceSlider" Minimum="1" Maximum="20" Grid.Row="2" Margin="100, 100, 80,65" ValueChanged="PerformanceSlider_ValueChanged"/>
+        <TextBlock x:Name="PerformanceValueTextBlock" HorizontalAlignment="Left" Grid.Row="2" Width="30" Height="30" Margin="290,115,0,49"/>
+
+        <Label Content="Skill Set:" Grid.Row="3" Margin="10,10,10,95"/>
+        <StackPanel x:Name="SkillCheckBoxes" Grid.Row="3" Margin="70,10,10,95">
+            <CheckBox Content="Skill 1"/>
+            <CheckBox Content="Skill 2"/>
+            <CheckBox Content="Skill 3"/>
+            <CheckBox Content="Skill 4"/>
+            <CheckBox Content="Skill 5"/>
+        </StackPanel>
+
+        <Button Content="Send" Click="SendButton_Click" Grid.Row="4" HorizontalAlignment="Center" Margin="0,140,0,0" Height="30" Width="80"/>
+    </Grid>
+</Window>

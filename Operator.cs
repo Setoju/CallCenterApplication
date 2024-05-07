@@ -79,6 +79,7 @@ namespace CallCenterApplication
                 callCenter.RemoveReceivedCall(call);
             }
             _onCall = true;
+            OnPropertyChanged("IsOnCall");
             _idleTimer.Reset();
 
             int unavailableTime = call.CallComplexity / _performance;
@@ -87,6 +88,7 @@ namespace CallCenterApplication
             MessageBox.Show("Done!");
 
             _onCall = false;
+            OnPropertyChanged("IsOnCall");
 
             callCenter.CheckQueue();
             Idle();

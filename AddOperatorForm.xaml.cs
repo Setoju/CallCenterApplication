@@ -26,6 +26,12 @@ namespace CallCenterApplication
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(NameTextBox.Text))
+            {
+                MessageBox.Show("Please enter a name.");
+                return;
+            }
+
             string name = NameTextBox.Text;
 
             Dictionary<string, int> languages = new Dictionary<string, int>();
@@ -36,6 +42,11 @@ namespace CallCenterApplication
                     languages.Add(checkBox.Content.ToString(), 1); // Set language level somehow
                 }
             }
+            if (languages.Count == 0)
+            {
+                MessageBox.Show("Please select at least one language.");
+                return;
+            }
 
             Dictionary<string, int> skillSet = new Dictionary<string, int>();
             foreach (CheckBox checkBox in SkillCheckBoxes.Children)
@@ -45,11 +56,17 @@ namespace CallCenterApplication
                     skillSet.Add(checkBox.Content.ToString(), 1); // Set skill level somehow
                 }
             }
+            if (skillSet.Count == 0)
+            {
+                MessageBox.Show("Please select at least one skill.");
+                return;
+            }
 
             int performance = (int)PerformanceSlider.Value;
           
             _operator = new Operator(name, languages, skillSet, performance);
             MainWindow._callCenter.AddOperator(_operator);
+            MainWindow._callCenter.CheckQueue();
 
             MessageBox.Show("Operator added successfully.");
 

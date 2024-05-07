@@ -25,7 +25,7 @@
             <CheckBox Content="Chinese"/>
         </StackPanel>
 
-        <Label Content="Performance:" Grid.Row="2" Margin="5,95, 300,60"/>
+        <Label Content="Complexity:" Grid.Row="2" Margin="5,95, 300,60"/>
         <Slider x:Name="PerformanceSlider" Minimum="1" Maximum="20" Grid.Row="2" Margin="100, 100, 80,65" ValueChanged="PerformanceSlider_ValueChanged"/>
         <TextBlock x:Name="PerformanceValueTextBlock" HorizontalAlignment="Left" Grid.Row="2" Width="30" Height="30" Margin="290,115,0,49"/>
 

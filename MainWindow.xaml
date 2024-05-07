@@ -5,19 +5,90 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CallCenterApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" MinHeight="450" MaxHeight="450" MinWidth="800" MaxWidth="800">
+    <Window.Resources>
+        <Style x:Key="OfficialButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="10, 5" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Content}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#808080"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#004669"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#C0C0C0"/>
+                    <Setter Property="Foreground" Value="#808080"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
         <!-- Add Operator button -->
-        <Button Content="Add Operator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Click="AddOperatorButton_Click"/>
+        <Button Content="Add Operator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Click="AddOperatorButton_Click" Style="{StaticResource OfficialButtonStyle}"/>
 
         <!-- Fire Operator button -->
-        <Button Content="Fire Operator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,10,0,0" Click="FireOperatorButton_Click"/>
+        <Button Content="Fire Operator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="105,10,0,0" Click="FireOperatorButton_Click" Style="{StaticResource OfficialButtonStyle}"/>
 
         <!-- Call button -->
-        <Button Content="Call" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,10,0,0" Click="CallButton_Click" />
+        <Button Content="Call" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="205,10,0,0" Click="CallButton_Click" Style="{StaticResource OfficialButtonStyle}"/>
 
         <!-- List of waiting calls -->
-        <ListBox Name="WaitingCallsListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0" Width="210" Height="40"/>
+        <ListView x:Name="callsQueue" Margin="250, 10, 10, 340">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="132">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Call Type" Width="132">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CallType}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Complexity" Width="132">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CallComplexity}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Waiting time" Width="132">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding WaitingTime}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <ListView.ItemsSource>
+                <Binding Path="CallsQueue"/>
+            </ListView.ItemsSource>
+        </ListView>
 
         <!-- Operator details -->
         <ListView x:Name="operatorsListView" Margin="10, 100, 10, 10">
@@ -41,6 +112,24 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Performance}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="On Call" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="No"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsOnCall}" Value="True">
+                                                    <Setter Property="Text" Value="Yes"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

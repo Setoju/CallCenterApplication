@@ -33,6 +33,12 @@ namespace CallCenterApplication
         }
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(NameTextBox.Text))
+            {
+                MessageBox.Show("Please enter a name.");
+                return;
+            }
+
             string name = NameTextBox.Text;
 
             Dictionary<string, int> languages = new Dictionary<string, int>();
@@ -43,6 +49,11 @@ namespace CallCenterApplication
                     languages.Add(checkBox.Content.ToString(), 1); // Set language level somehow
                 }
             }
+            if (languages.Count == 0)
+            {
+                MessageBox.Show("Please select at least one language.");
+                return;
+            }
 
             string callType = string.Empty;
             foreach (RadioButton radioButton in SkillRadioButtons.Children)
@@ -52,6 +63,11 @@ namespace CallCenterApplication
                     callType = radioButton.Content.ToString();
                     break; 
                 }
+            }
+            if (callType == string.Empty)
+            {
+                MessageBox.Show("Please select call type.");
+                return;
             }
 
             int timeComplexity = (int)PerformanceSlider.Value;

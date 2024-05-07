@@ -1,21 +1,29 @@
-﻿using CallCenterApplication;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace CallCenterApplication
 {
-    public partial class AddOperatorForm : Window
+    /// <summary>
+    /// Interaction logic for CallerForm.xaml
+    /// </summary>
+    public partial class CallerForm : Window
     {
-        private Operator? _operator = null;
-
-        public AddOperatorForm()
+        Caller? _caller = null;
+        public CallerForm()
         {
             InitializeComponent();
         }
-
         private void PerformanceSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (PerformanceValueTextBlock != null)
@@ -23,7 +31,6 @@ namespace CallCenterApplication
                 PerformanceValueTextBlock.Text = ((int)PerformanceSlider.Value).ToString();
             }
         }
-
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             string name = NameTextBox.Text;
@@ -37,23 +44,22 @@ namespace CallCenterApplication
                 }
             }
 
-            Dictionary<string, int> skillSet = new Dictionary<string, int>();
-            foreach (CheckBox checkBox in SkillCheckBoxes.Children)
+            string callType = string.Empty;
+            foreach (RadioButton radioButton in SkillRadioButtons.Children)
             {
-                if (checkBox.IsChecked == true)
+                if (radioButton.IsChecked == true)
                 {
-                    skillSet.Add(checkBox.Content.ToString(), 1); // Set skill level somehow
+                    callType = radioButton.Content.ToString();
+                    break; 
                 }
             }
 
-            int performance = (int)PerformanceSlider.Value;
-          
-            _operator = new Operator(name, languages, skillSet, performance);
-            MainWindow._callCenter.AddOperator(_operator);
+            int timeComplexity = (int)PerformanceSlider.Value;
 
-            MessageBox.Show("Operator added successfully.");
-
+            _caller = new Caller(name, languages, callType, timeComplexity);
             this.Close();
+
+            MainWindow._callCenter.ReceiveCall(_caller);                        
         }
     }
 }

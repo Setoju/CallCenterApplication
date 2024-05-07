@@ -16,37 +16,34 @@ namespace CallCenterApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static CallCenter _callCenter = new CallCenter();
-        private AddOperatorForm addOperatorForm = new AddOperatorForm(_callCenter);
+        public static CallCenter _callCenter = new CallCenter();
         public MainWindow()
         {
             InitializeComponent();
-
-            MainCall();
-        }
-
-        public void MainCall()
-        {
-            //Operator op1 = new Operator("Eugene", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, new Dictionary<string, int> { { "Communicating", 1 } }, 10);
-            //Operator op2 = new Operator("Sergei", new Dictionary<string, int> { { "Italian", 1 }, { "Spanish", 2 } }, new Dictionary<string, int> { { "Helping", 1 } }, 10);
-
-            //Caller call1 = new Caller("Sasa", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, "Communicating", 20);
-            //Caller call2 = new Caller("Sasha", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, "Helping", 20);
-            //Caller call3 = new Caller("Sashaasd", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, "Helping", 20);
-            //Caller call4 = new Caller("Sashaasasdd", new Dictionary<string, int> { { "English", 1 }, { "Spanish", 2 } }, "Helping", 20);
-
-            //List<Operator> operators = new List<Operator>() { op1, op2 };
-
-                       
-            //_callCenter.ReceiveCall(call1);
-            //_callCenter.ReceiveCall(call2);
-            //_callCenter.ReceiveCall(call3);
-            //_callCenter.ReceiveCall(call4);
+            DataContext = _callCenter;
+            Operator op = new Operator("Eugene", new Dictionary<string, int> {{ "English", 1 }}, new Dictionary<string, int> { { "Skill 1", 1 }}, 10);
+            _callCenter.AddOperator(op);
         }
 
         private void AddOperatorButton_Click(object sender, RoutedEventArgs e)
         {
-            addOperatorForm.AddOperatorButton_Click(sender, e);
+            AddOperatorForm addOperatorForm = new AddOperatorForm();
+            addOperatorForm.Show();
+        }
+        private void FireOperatorButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (operatorsListView.SelectedItem != null)
+            {
+                Operator selectedOperator = (Operator)operatorsListView.SelectedItem;
+                _callCenter.RemoveOperator(selectedOperator);
+                operatorsListView.Items.Refresh();
+            }
+        }
+
+        private void CallButton_Click(object sender, RoutedEventArgs e)
+        {
+            CallerForm callerForm = new CallerForm();
+            callerForm.Show();
         }
     }
 }

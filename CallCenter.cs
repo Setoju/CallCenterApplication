@@ -1,45 +1,44 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace CallCenterApplication
 {
-    public class CallCenter
+    public class CallCenter : INotifyPropertyChanged
     {
-        private List<Operator> _operators;
-        private List<Caller> _callsQueue;
-        // It's much harder to implement the PriorityQueue because we often change the Queue
-        // But we can't iterate through the PriorityQueue, so it makes methods too complicated
+        private ObservableCollection<Operator> _operators;
+        private ObservableCollection<Caller> _callsQueue;
 
         public CallCenter()
         {
-            _operators = new List<Operator>();
-            _callsQueue = new List<Caller>();
+            _operators = new ObservableCollection<Operator>();
+            _callsQueue = new ObservableCollection<Caller>();
         }
 
-        public List<Operator> Operators
+        public ObservableCollection<Operator> Operators
         {
-            get { return _operators; }            
-        }    
-        
-        public List<Caller> CallsQueue
+            get { return _operators; }
+        }
+
+        public ObservableCollection<Caller> CallsQueue
         {
             get { return _callsQueue; }
         }
 
-        public void AddOperator(Operator _operator)
+        public void AddOperator(Operator @operator)
         {
-            _operators.Add(_operator);
+            _operators.Add(@operator);
+            OnPropertyChanged(nameof(Operators));
         }
 
-        public void RemoveOperator(Operator _operator)
+        public void RemoveOperator(Operator @operator)
         {
-            _operators.Remove(_operator);
+            _operators.Remove(@operator);
+            OnPropertyChanged(nameof(Operators));
         }
 
         public void ReceiveCall(Caller call)
@@ -49,12 +48,13 @@ namespace CallCenterApplication
             {
                 SendCall(call);
             }
-
+            OnPropertyChanged(nameof(CallsQueue));
         }
 
         public void RemoveReceivedCall(Caller call)
         {
             _callsQueue.Remove(call);
+            OnPropertyChanged(nameof(CallsQueue));
         }
 
         private bool CanSendCall(Caller call)
@@ -69,7 +69,7 @@ namespace CallCenterApplication
 
             return false;
         }
-        
+
         public async void SendCall(Caller call)
         {
             Operator bestOperator = null;
@@ -109,6 +109,13 @@ namespace CallCenterApplication
                     }
                 }
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

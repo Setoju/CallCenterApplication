@@ -21,8 +21,6 @@ namespace CallCenterApplication
         {
             InitializeComponent();
             DataContext = _callCenter;
-            Operator op = new Operator("Eugene", new Dictionary<string, int> {{ "English", 1 }}, new Dictionary<string, int> { { "Skill 1", 1 }}, 10);
-            _callCenter.AddOperator(op);
         }
 
         private void AddOperatorButton_Click(object sender, RoutedEventArgs e)

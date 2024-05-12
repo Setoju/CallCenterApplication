@@ -17,7 +17,7 @@ namespace CallCenterApplication
     /// <summary>
     /// Interaction logic for CallerForm.xaml
     /// </summary>
-    public partial class CallerForm : Window
+    public partial class CallerForm
     {
         Caller? _caller = null;
         public CallerForm()

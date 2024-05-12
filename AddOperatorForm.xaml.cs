@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace CallCenterApplication
 {
-    public partial class AddOperatorForm : Window
+    public partial class AddOperatorForm
     {
         private Operator? _operator = null;
 

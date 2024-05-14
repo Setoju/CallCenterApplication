@@ -75,7 +75,7 @@ namespace CallCenterApplication
             _caller = new Caller(name, languages, callType, timeComplexity);
             this.Close();
 
-            MainWindow._callCenter.ReceiveCall(_caller);                        
+            ViewModel._callCenter.ReceiveCall(_caller);                        
         }
     }
 }

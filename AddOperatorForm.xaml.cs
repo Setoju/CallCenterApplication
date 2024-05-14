@@ -65,8 +65,8 @@ namespace CallCenterApplication
             int performance = (int)PerformanceSlider.Value;
           
             _operator = new Operator(name, languages, skillSet, performance);
-            MainWindow._callCenter.AddOperator(_operator);
-            MainWindow._callCenter.CheckQueue();
+            ViewModel._callCenter.AddOperator(_operator);
+            ViewModel._callCenter.CheckQueue();
 
             MessageBox.Show("Operator added successfully.");
 

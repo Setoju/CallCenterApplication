@@ -36,7 +36,7 @@ namespace CallCenterApplication
             {
                 if (_waitingTime.Elapsed.TotalSeconds > 30)
                 {
-                    MainWindow._callCenter.RemoveReceivedCall(this);
+                    ViewModel._callCenter.RemoveReceivedCall(this);
                     timer.Stop();
                 }
                 OnPropertyChanged("WaitingTime");

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CallCenterApplication"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="450" MaxHeight="450" MinWidth="800" MaxWidth="800">
+        Title="CallCenter" MinHeight="450" MaxHeight="450" MinWidth="800" MaxWidth="800">
     <Window.Resources>
         <Style x:Key="OfficialButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="White" />
@@ -43,13 +43,13 @@
     </Window.Resources>
     <Grid>
         <!-- Add Operator button -->
-        <Button Content="Add Operator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Click="AddOperatorButton_Click" Style="{StaticResource OfficialButtonStyle}"/>
+        <Button Content="Add Operator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Command="{Binding AddOperatorCommand}" Style="{StaticResource OfficialButtonStyle}"/>
 
         <!-- Fire Operator button -->
-        <Button Content="Fire Operator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="105,10,0,0" Click="FireOperatorButton_Click" Style="{StaticResource OfficialButtonStyle}"/>
+        <Button Content="Fire Operator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="105,10,0,0" Command="{Binding FireOperatorCommand}" Style="{StaticResource OfficialButtonStyle}"/>
 
         <!-- Call button -->
-        <Button Content="Call" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="205,10,0,0" Click="CallButton_Click" Style="{StaticResource OfficialButtonStyle}"/>
+        <Button Content="Call" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="205,10,0,0" Command="{Binding CallCommand}" Style="{StaticResource OfficialButtonStyle}"/>
 
         <!-- List of waiting calls -->
         <ListView x:Name="callsQueue" Margin="250, 10, 10, 340">

@@ -22,5 +22,26 @@ namespace CallCenterApplication
             ViewModel viewModel = new ViewModel(operatorsListView);
             DataContext = viewModel;
         }
+
+        //private void AddOperatorButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    AddOperatorForm addOperatorForm = new AddOperatorForm();
+        //    addOperatorForm.Show();
+        //}
+        //private void FireOperatorButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (operatorsListView.SelectedItem != null)
+        //    {
+        //        Operator selectedOperator = (Operator)operatorsListView.SelectedItem;
+        //        _callCenter.RemoveOperator(selectedOperator);
+        //        operatorsListView.Items.Refresh();
+        //    }
+        //}
+
+        //private void CallButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CallerForm callerForm = new CallerForm();
+        //    callerForm.Show();
+        //}
     }
 }

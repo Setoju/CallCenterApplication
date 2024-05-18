@@ -68,6 +68,8 @@ namespace CallCenterApplication
             ViewModel._callCenter.AddOperator(_operator);
             ViewModel._callCenter.CheckQueue();
 
+            MessageBox.Show("Operator added successfully.");
+
             this.Close();
         }
     }

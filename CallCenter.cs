@@ -110,7 +110,6 @@ namespace CallCenterApplication
                 }
             }
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)

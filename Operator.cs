@@ -64,13 +64,7 @@ namespace CallCenterApplication
         private void Timer_Tick(object sender, EventArgs e)
         {
             OnPropertyChanged("IdleTimeElapsed");
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }        
 
         public async Task RespondToCall(Caller call, CallCenter callCenter)
         {
@@ -83,15 +77,20 @@ namespace CallCenterApplication
             _idleTimer.Reset();
 
             int unavailableTime = call.CallComplexity / _performance;
-            MessageBox.Show("Working...");
             await Task.Delay(unavailableTime * 1000);
-            MessageBox.Show("Done!");
 
             _onCall = false;
             OnPropertyChanged("IsOnCall");
 
             callCenter.CheckQueue();
             Idle();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

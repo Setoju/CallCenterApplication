@@ -28,11 +28,11 @@
 
         <Label Content="Skill Set:" Grid.Row="3" Margin="10,10,10,95"/>
         <StackPanel x:Name="SkillCheckBoxes" Grid.Row="3" Margin="70,10,10,95">
-            <CheckBox Content="Skill 1"/>
-            <CheckBox Content="Skill 2"/>
-            <CheckBox Content="Skill 3"/>
-            <CheckBox Content="Skill 4"/>
-            <CheckBox Content="Skill 5"/>
+            <CheckBox Content="Technical Support"/>
+            <CheckBox Content="Customer Complaints and Service Issues"/>
+            <CheckBox Content="Account Management"/>
+            <CheckBox Content="Product Information and Sales"/>
+            <CheckBox Content="Billing and Payments"/>
         </StackPanel>
 
         <Button Content="Send" Click="SendButton_Click" Grid.Row="4" HorizontalAlignment="Center" Margin="0,140,0,0" Height="30" Width="80"/>

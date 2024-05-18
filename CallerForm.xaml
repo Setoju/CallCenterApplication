@@ -31,11 +31,11 @@
 
         <Label Content="Skill Set:" Grid.Row="3" Margin="10,10,10,95"/>
         <StackPanel x:Name="SkillRadioButtons" Grid.Row="3" Margin="70,10,10,95">
-            <RadioButton Content="Skill 1"/>
-            <RadioButton Content="Skill 2"/>
-            <RadioButton Content="Skill 3"/>
-            <RadioButton Content="Skill 4"/>
-            <RadioButton Content="Skill 5"/>
+            <RadioButton Content="Technical Support"/>
+            <RadioButton Content="Customer Complaints and Service Issues"/>
+            <RadioButton Content="Account Management"/>
+            <RadioButton Content="Product Information and Sales"/>
+            <RadioButton Content="Billing and Payments"/>
         </StackPanel>
 
         <Button Content="Send" Click="SendButton_Click" Grid.Row="4" HorizontalAlignment="Center" Margin="0,140,0,0" Height="30" Width="80"/>

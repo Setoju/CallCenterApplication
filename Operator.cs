@@ -12,13 +12,13 @@ namespace CallCenterApplication
 {
     public class Operator : Person, INotifyPropertyChanged
     {
-        private Dictionary<string, int> _skillSet;
+        private List<string> _skillSet;
         private int _performance;
         private Stopwatch _idleTimer;
         private bool _onCall = false;
         private DispatcherTimer _timer;
 
-        public Operator(string name, Dictionary<string, int> languages, Dictionary<string, int> skillSet, int performance)
+        public Operator(string name, List<string> languages, List<string> skillSet, int performance)
             : base(name, languages)
         {
             _skillSet = skillSet;
@@ -31,7 +31,7 @@ namespace CallCenterApplication
             Idle();
         }
 
-        public Dictionary<string, int> Skills
+        public List<string> Skills
         {
             get { return _skillSet; }
         }
@@ -83,9 +83,7 @@ namespace CallCenterApplication
             _idleTimer.Reset();
 
             int unavailableTime = call.CallComplexity / _performance;
-            MessageBox.Show("Working...");
             await Task.Delay(unavailableTime * 1000);
-            MessageBox.Show("Done!");
 
             _onCall = false;
             OnPropertyChanged("IsOnCall");

@@ -9,9 +9,9 @@ namespace CallCenterApplication
     public abstract class Person
     {
         protected string _name;
-        protected Dictionary<string, int> _languages;
+        protected List<string> _languages;
 
-        public Person(string name, Dictionary<string, int> languages)
+        public Person(string name, List<string> languages)
         {
             _name = name;
             _languages = languages;
@@ -22,7 +22,7 @@ namespace CallCenterApplication
             get { return _name; }
         }
 
-        public Dictionary<string, int> Languages {
+        public List<string> Languages {
             get { return _languages; }
         }        
     }

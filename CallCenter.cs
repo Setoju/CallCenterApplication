@@ -61,7 +61,7 @@ namespace CallCenterApplication
         {
             foreach (Operator op in _operators)
             {
-                if (!op.IsOnCall && call.Languages.Keys.Intersect(op.Languages.Keys).Any() && op.Skills.ContainsKey(call.CallType))
+                if (!op.IsOnCall && call.Languages.Intersect(op.Languages).Any() && op.Skills.Contains(call.CallType))
                 {
                     return true;
                 }
@@ -70,20 +70,19 @@ namespace CallCenterApplication
             return false;
         }
 
+
         public async void SendCall(Caller call)
         {
             Operator bestOperator = null;
-            int bestSkillLevel = int.MaxValue;
             TimeSpan longestIdleTime = TimeSpan.Zero;
 
             foreach (Operator op in _operators)
             {
-                if (!op.IsOnCall && call.Languages.Keys.Intersect(op.Languages.Keys).Any() && op.Skills.ContainsKey(call.CallType))
+                if (!op.IsOnCall && call.Languages.Intersect(op.Languages).Any() && op.Skills.Contains(call.CallType))
                 {
-                    if (op.Skills[call.CallType] < bestSkillLevel || (op.Skills[call.CallType] == bestSkillLevel && op.IdleTime.Elapsed > longestIdleTime))
+                    if (bestOperator == null || op.IdleTime.Elapsed > longestIdleTime)
                     {
                         bestOperator = op;
-                        bestSkillLevel = op.Skills[call.CallType];
                         longestIdleTime = op.IdleTime.Elapsed;
                     }
                 }
@@ -94,6 +93,7 @@ namespace CallCenterApplication
                 await bestOperator.RespondToCall(call, this);
             }
         }
+
 
         public void CheckQueue()
         {

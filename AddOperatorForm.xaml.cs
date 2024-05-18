@@ -34,12 +34,12 @@ namespace CallCenterApplication
 
             string name = NameTextBox.Text;
 
-            Dictionary<string, int> languages = new Dictionary<string, int>();
+            List<string> languages = new List<string>();
             foreach (CheckBox checkBox in LanguageCheckBoxes.Children)
             {
                 if (checkBox.IsChecked == true)
                 {
-                    languages.Add(checkBox.Content.ToString(), 1); // Set language level somehow
+                    languages.Add(checkBox.Content.ToString());
                 }
             }
             if (languages.Count == 0)
@@ -48,12 +48,12 @@ namespace CallCenterApplication
                 return;
             }
 
-            Dictionary<string, int> skillSet = new Dictionary<string, int>();
+            List<string> skillSet = new List<string>();
             foreach (CheckBox checkBox in SkillCheckBoxes.Children)
             {
                 if (checkBox.IsChecked == true)
                 {
-                    skillSet.Add(checkBox.Content.ToString(), 1); // Set skill level somehow
+                    skillSet.Add(checkBox.Content.ToString());
                 }
             }
             if (skillSet.Count == 0)

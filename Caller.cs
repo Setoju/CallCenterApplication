@@ -14,7 +14,7 @@ namespace CallCenterApplication
         private int _callComplexity;       
         private Stopwatch _waitingTime = new Stopwatch();
 
-        public Caller(string name, Dictionary<string, int> languages, string callType, int callComplexity) : base(name, languages)
+        public Caller(string name, List<string> languages, string callType, int callComplexity) : base(name, languages)
         {
             _callType = callType;
             _callComplexity = callComplexity;
@@ -52,7 +52,7 @@ namespace CallCenterApplication
         {
             get { return _waitingTime.Elapsed.ToString(@"hh\:mm\:ss"); }
         }
-        public Dictionary<string, int> CallLanguages
+        public List<string> CallLanguages
         {
             get { return _languages; }
         }

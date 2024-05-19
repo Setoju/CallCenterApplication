@@ -82,9 +82,12 @@ namespace CallCenterApplication
             OnPropertyChanged("IsOnCall");
             _idleTimer.Reset();
 
-            int unavailableTime = call.CallComplexity / _performance;
-            await Task.Delay(unavailableTime * 1000);
+            int unavailableTime = (int)((call.CallComplexity / Convert.ToDouble(_performance)) * 1000);
+            await Task.Delay(unavailableTime);
 
+            TimeSpan callTime = TimeSpan.FromMilliseconds(unavailableTime);
+
+            CallHistory.SerializeToFile(new CallHistory(_name, call.Name, call.CallType, call.CallLanguages, callTime.Seconds));
             _onCall = false;
             OnPropertyChanged("IsOnCall");
 

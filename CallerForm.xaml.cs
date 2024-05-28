@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,9 +34,9 @@ namespace CallCenterApplication
         }
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(NameTextBox.Text))
+            if (string.IsNullOrWhiteSpace(NameTextBox.Text) || !IsNameValid(NameTextBox.Text))
             {
-                MessageBox.Show("Please enter a name.");
+                MessageBox.Show("Please enter a valid name.");
                 return;
             }
 
@@ -76,6 +77,12 @@ namespace CallCenterApplication
             this.Close();
 
             ViewModel._callCenter.ReceiveCall(_caller);                        
+        }
+
+        private bool IsNameValid(string name)
+        {
+            Regex regex = new Regex(@"^[a-zA-Z]+(?:['-][a-zA-Z]+)*\s*[a-zA-Z]*$");
+            return regex.IsMatch(name);
         }
     }
 }

@@ -66,6 +66,16 @@ namespace CallCenterApplication
             int performance = (int)PerformanceSlider.Value;
           
             _operator = new Operator(name, languages, skillSet, performance);
+
+            foreach(Operator op in ViewModel._callCenter.Operators)
+            {
+                if (_operator.Equals(op))
+                {
+                    MessageBox.Show("Such operator already exists.");
+                    return;
+                }
+            }
+
             ViewModel._callCenter.AddOperator(_operator);
             ViewModel._callCenter.CheckQueue();
 

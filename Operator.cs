@@ -85,6 +85,8 @@ namespace CallCenterApplication
             int unavailableTime = (int)((call.CallComplexity / Convert.ToDouble(_performance)) * 1000);
             await Task.Delay(unavailableTime);
 
+            MessageBox.Show("Finished");
+
             TimeSpan callTime = TimeSpan.FromMilliseconds(unavailableTime);
 
             CallHistory.SerializeToFile(new CallHistory(_name, call.Name, call.CallType, call.CallLanguages, callTime.Seconds));
@@ -93,6 +95,33 @@ namespace CallCenterApplication
 
             callCenter.CheckQueue();
             Idle();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            var other = (Operator)obj;
+
+            if (!Name.Equals(other.Name))
+            {
+                return false;
+            }
+
+            if (!Languages.SequenceEqual(other.Languages))
+            {
+                return false;
+            }
+
+            if (!Skills.SequenceEqual(other.Skills))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -6,9 +6,28 @@
     "English"
   ],
   "_callTime": 2
-}{
+}
+{
   "_operatorName": "Natella",
   "_clientName": "Katya",
+  "_callType": "Technical Support",
+  "_callLanguages": [
+    "English"
+  ],
+  "_callTime": 20
+}
+{
+  "_operatorName": "Eugene",
+  "_clientName": "Rostik",
+  "_callType": "Technical Support",
+  "_callLanguages": [
+    "English"
+  ],
+  "_callTime": 4
+}
+{
+  "_operatorName": "Eugene",
+  "_clientName": "Natella",
   "_callType": "Technical Support",
   "_callLanguages": [
     "English"
